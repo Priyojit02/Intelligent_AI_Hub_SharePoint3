@@ -35,7 +35,7 @@ export default function DashboardPage() {
     sharepointHubs: 0
   })
 
-  // Check authentication on page load - logout ONLY on refresh
+  // Check authentication on page load - logout ONLY on actual refresh
   useEffect(() => {
     const now = Date.now()
     const lastLoad = localStorage.getItem('lastPageLoad')
@@ -48,9 +48,13 @@ export default function DashboardPage() {
       return
     }
 
-    if (lastLoad) {
+    // Check if this is an actual page refresh vs navigation
+    const navigationType = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming
+    const isActualRefresh = navigationType && navigationType.type === 'reload'
+
+    if (lastLoad && isActualRefresh) {
       const timeDiff = now - parseInt(lastLoad)
-      // If more than 3 seconds since last page load, it's a refresh
+      // Only logout on actual refresh, not navigation
       if (timeDiff > 3000) {
         localStorage.removeItem('isAuthenticated')
         localStorage.removeItem('user')
@@ -61,7 +65,7 @@ export default function DashboardPage() {
       }
     }
 
-    // Update last load time
+    // Update last load time for navigation tracking
     localStorage.setItem('lastPageLoad', now.toString())
   }, [])
 
