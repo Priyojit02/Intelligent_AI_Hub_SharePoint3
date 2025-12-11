@@ -23,6 +23,7 @@ export default function LoginPage() {
       // Store authentication state
       localStorage.setItem('isAuthenticated', 'true')
       localStorage.setItem('user', JSON.stringify({ username: credentials.username }))
+      localStorage.setItem('justLoggedIn', 'true') // Flag to indicate legitimate login navigation
 
       toast.success('Login successful!')
       router.push('/dashboard')
@@ -34,7 +35,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary-800 via-white to-secondary-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="mx-auto h-16 w-16 bg-primary-600 rounded-full flex items-center justify-center">

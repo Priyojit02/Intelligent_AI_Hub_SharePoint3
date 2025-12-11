@@ -196,7 +196,7 @@ export default function CreateHubModal({ onClose, onCreate }: CreateHubModalProp
                       /* Admin Authentication Step */
                       <form onSubmit={handleAdminAuth} className="mt-6 space-y-4">
                         <div className="text-center">
-                          <ShieldCheckIcon className="mx-auto h-12 w-12 text-primary-600" />
+                          <ShieldCheckIcon className="mx-auto h-12 w-12 text-primary-900" />
                           <p className="mt-2 text-sm text-secondary-600">
                             Admin privileges required to create document hubs
                           </p>
@@ -257,7 +257,7 @@ export default function CreateHubModal({ onClose, onCreate }: CreateHubModalProp
                               onClick={() => setActiveTab('sharepoint')}
                               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                                 activeTab === 'sharepoint'
-                                  ? 'border-primary-500 text-primary-600'
+                                  ? 'border-create-500 text-create-600'
                                   : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
                               }`}
                             >
@@ -268,7 +268,7 @@ export default function CreateHubModal({ onClose, onCreate }: CreateHubModalProp
                               onClick={() => setActiveTab('upload')}
                               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                                 activeTab === 'upload'
-                                  ? 'border-primary-500 text-primary-600'
+                                  ? 'border-create-500 text-create-600'
                                   : 'border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300'
                               }`}
                             >
@@ -321,7 +321,7 @@ export default function CreateHubModal({ onClose, onCreate }: CreateHubModalProp
                             <input
                               id="auto_sync"
                               type="checkbox"
-                              className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-secondary-300 rounded"
+                              className="h-4 w-4 text-primary-900 focus:ring-primary-800 border-secondary-300 rounded"
                               checked={formData.auto_sync}
                               onChange={(e) => setFormData(prev => ({ ...prev, auto_sync: e.target.checked }))}
                             />
@@ -341,8 +341,8 @@ export default function CreateHubModal({ onClose, onCreate }: CreateHubModalProp
                               {...getRootProps()}
                               className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
                                 isDragActive
-                                  ? 'border-primary-400 bg-primary-50'
-                                  : 'border-secondary-300 hover:border-primary-400'
+                                  ? 'border-primary-700 bg-primary-800'
+                                  : 'border-secondary-300 hover:border-primary-700'
                               }`}
                             >
                               <input {...getInputProps()} />

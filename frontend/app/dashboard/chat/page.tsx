@@ -40,15 +40,32 @@ export default function ChatPage() {
 
   // Check authentication on page load - logout ONLY on refresh
   useEffect(() => {
-    if (sessionStorage.getItem('pageLoaded')) {
-      // This is a refresh, logout
-      localStorage.removeItem('isAuthenticated')
-      localStorage.removeItem('user')
-      localStorage.removeItem('loadTime')
-      window.location.href = '/login'
+    const now = Date.now()
+    const lastLoad = localStorage.getItem('lastPageLoad')
+    const justLoggedIn = localStorage.getItem('justLoggedIn')
+
+    // If just logged in, clear the flag and don't check for refresh
+    if (justLoggedIn) {
+      localStorage.removeItem('justLoggedIn')
+      localStorage.setItem('lastPageLoad', now.toString())
+      return
     }
-    // Mark that page has loaded
-    sessionStorage.setItem('pageLoaded', 'true')
+
+    if (lastLoad) {
+      const timeDiff = now - parseInt(lastLoad)
+      // If more than 3 seconds since last page load, it's a refresh
+      if (timeDiff > 3000) {
+        localStorage.removeItem('isAuthenticated')
+        localStorage.removeItem('user')
+        localStorage.removeItem('loadTime')
+        localStorage.removeItem('justLoggedIn')
+        window.location.href = '/login'
+        return
+      }
+    }
+
+    // Update last load time
+    localStorage.setItem('lastPageLoad', now.toString())
   }, [])
 
   // Load messages from localStorage on mount
@@ -416,8 +433,8 @@ export default function ChatPage() {
                 <div className="flex items-start space-x-3">
                   {message.role === 'assistant' && (
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-primary-200 rounded-full flex items-center justify-center">
-                        <DocumentIcon className="w-5 h-5 text-primary-600" />
+                      <div className="w-8 h-8 bg-create-500 rounded-full flex items-center justify-center">
+                        <DocumentIcon className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   )}
@@ -450,13 +467,13 @@ export default function ChatPage() {
           <div className="flex justify-start">
             <div className="bg-white border border-secondary-200 rounded-lg px-4 py-3 max-w-3xl">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary-200 rounded-full flex items-center justify-center">
-                  <DocumentIcon className="w-5 h-5 text-primary-600" />
+                <div className="w-8 h-8 bg-create-500 rounded-full flex items-center justify-center">
+                  <DocumentIcon className="w-5 h-5 text-white" />
                 </div>
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-primary-600 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-primary-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-primary-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-create-600 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-create-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-create-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>

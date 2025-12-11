@@ -177,8 +177,8 @@ export default function HubCard({ hub, onUpdate }: HubCardProps) {
     <div className="card hover:shadow-md transition-shadow duration-200">
       <div className="flex items-start justify-between">
         <div className="flex items-center">
-          <div className="p-2 bg-primary-100 rounded-lg">
-            <DocumentIcon className="h-6 w-6 text-primary-600" />
+          <div className="p-2 bg-create-500 rounded-lg">
+            <DocumentIcon className="h-6 w-6 text-white" />
           </div>
           <div className="ml-3">
             <h3 className="text-lg font-semibold text-secondary-900">{hub.hub_name}</h3>
@@ -217,16 +217,16 @@ export default function HubCard({ hub, onUpdate }: HubCardProps) {
       </div>
 
       {/* File Preview Section */}
-      <div className="mt-4 p-3 bg-primary-200 rounded-lg border border-primary-300">
+      <div className="mt-4 p-3 bg-primary-800 rounded-lg border border-primary-700">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center text-sm font-medium text-secondary-900">
-            <DocumentIcon className="h-4 w-4 mr-2 text-primary-600" />
+            <DocumentIcon className="h-4 w-4 mr-2 text-primary-900" />
             Files ({hub.file_count})
           </div>
           <button
             onClick={handleShowFiles}
             disabled={isLoadingDetails}
-            className="text-primary-600 hover:text-primary-700 text-xs font-medium flex items-center disabled:opacity-50"
+            className="text-primary-900 hover:text-primary-900 text-xs font-medium flex items-center disabled:opacity-50"
           >
             {showFiles ? (
               <>

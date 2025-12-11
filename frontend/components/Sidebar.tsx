@@ -28,6 +28,8 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('user')
     localStorage.removeItem('loadTime')
+    localStorage.removeItem('justLoggedIn')
+    localStorage.removeItem('lastPageLoad')
     sessionStorage.removeItem('pageLoaded')
     window.location.href = '/login'
   }
@@ -113,13 +115,13 @@ function SidebarContent({ pathname, onLogout }: SidebarContentProps) {
                     href={item.href}
                     className={`group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold ${
                       pathname === item.href
-                        ? 'bg-primary-300 text-primary-700'
-                        : 'text-secondary-700 hover:text-primary-600 hover:bg-secondary-50'
+                        ? 'bg-create-500 text-white'
+                        : 'text-secondary-700 hover:text-create-600 hover:bg-secondary-50'
                     }`}
                   >
                     <item.icon
                       className={`h-6 w-6 shrink-0 ${
-                        pathname === item.href ? 'text-primary-700' : 'text-secondary-400 group-hover:text-primary-600'
+                        pathname === item.href ? 'text-white' : 'text-secondary-400 group-hover:text-create-600'
                       }`}
                       aria-hidden="true"
                     />

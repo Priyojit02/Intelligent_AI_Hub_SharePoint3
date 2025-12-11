@@ -37,15 +37,32 @@ export default function DashboardPage() {
 
   // Check authentication on page load - logout ONLY on refresh
   useEffect(() => {
-    if (sessionStorage.getItem('pageLoaded')) {
-      // This is a refresh, logout
-      localStorage.removeItem('isAuthenticated')
-      localStorage.removeItem('user')
-      localStorage.removeItem('loadTime')
-      window.location.href = '/login'
+    const now = Date.now()
+    const lastLoad = localStorage.getItem('lastPageLoad')
+    const justLoggedIn = localStorage.getItem('justLoggedIn')
+
+    // If just logged in, clear the flag and don't check for refresh
+    if (justLoggedIn) {
+      localStorage.removeItem('justLoggedIn')
+      localStorage.setItem('lastPageLoad', now.toString())
+      return
     }
-    // Mark that page has loaded
-    sessionStorage.setItem('pageLoaded', 'true')
+
+    if (lastLoad) {
+      const timeDiff = now - parseInt(lastLoad)
+      // If more than 3 seconds since last page load, it's a refresh
+      if (timeDiff > 3000) {
+        localStorage.removeItem('isAuthenticated')
+        localStorage.removeItem('user')
+        localStorage.removeItem('loadTime')
+        localStorage.removeItem('justLoggedIn')
+        window.location.href = '/login'
+        return
+      }
+    }
+
+    // Update last load time
+    localStorage.setItem('lastPageLoad', now.toString())
   }, [])
 
   useEffect(() => {
@@ -161,8 +178,8 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="card">
           <div className="flex items-center">
-            <div className="p-2 bg-primary-300 rounded-lg">
-              <DocumentIcon className="h-6 w-6 text-primary-600" />
+            <div className="p-2 bg-create-500 rounded-lg">
+              <DocumentIcon className="h-6 w-6 text-white" />
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-secondary-600">Total Hubs</p>
